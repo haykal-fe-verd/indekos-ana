@@ -5,28 +5,28 @@ import Sidebar from "@/layouts/shared/sidebar";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 
 function MobileSidebar() {
-    //! states
-    const [isMounted, setIsMounted] = React.useState(false);
+  //! states
+  const [isMounted, setIsMounted] = React.useState(false);
 
-    //! mounted
-    React.useEffect(() => {
-        setIsMounted(true);
-    }, []);
+  //! mounted
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
-    if (!isMounted) {
-        return null;
-    }
+  if (!isMounted) {
+    return null;
+  }
 
-    return (
-        <Sheet>
-            <SheetTrigger>
-                <HamburgerMenuIcon className="md:hidden" />
-            </SheetTrigger>
-            <SheetContent side="left" className="p-0">
-                <Sidebar />
-            </SheetContent>
-        </Sheet>
-    );
+  return (
+    <Sheet>
+      <SheetTrigger>
+        <HamburgerMenuIcon className="lg:hidden" />
+      </SheetTrigger>
+      <SheetContent side="left" className="p-0">
+        <Sidebar />
+      </SheetContent>
+    </Sheet>
+  );
 }
 
 export default MobileSidebar;
