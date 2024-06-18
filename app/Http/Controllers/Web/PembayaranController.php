@@ -84,6 +84,7 @@ class PembayaranController extends Controller
 
     public function handleMidtransCallback(Request $request)
     {
+        dd($request->all());
         $params = $request->query();
         if (isset($params['order_id']) && isset($params['status_code']) && isset($params['transaction_status'])) {
             $pembayaran = Pembayaran::where('invoice', $params['order_id'])->firstOrFail();

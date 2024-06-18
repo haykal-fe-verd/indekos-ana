@@ -15,6 +15,8 @@ import currentcyFormatter from "@/lib/currentcy-formatter";
 import PrintComponent from "./print-component";
 
 function PageTransaksiSaya({ transaksi }: any) {
+  console.log("🚀  testttt ==>", "testttt");
+
   //! events
   const onBayar = (item: any) => {
     handlPayment(item.snap_token);
@@ -88,7 +90,6 @@ function PageTransaksiSaya({ transaksi }: any) {
   React.useEffect(() => {
     // Parse query parameters dari URL
     const urlParams = new URLSearchParams(window.location.search);
-    console.log("🚀  urlParams ==>", urlParams);
     const order_id = urlParams.get("order_id");
     const status_code = urlParams.get("status_code");
     const transaction_status = urlParams.get("transaction_status");
