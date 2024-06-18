@@ -99,13 +99,10 @@ function PageTransaksiSaya({ transaksi }: any) {
         order_id,
         status_code,
         transaction_status,
-      }),
-        {
-          onSuccess: () => {
-            window.history.replaceState(null, "", window.location.pathname);
-          },
-        };
+      });
     }
+
+    window.history.replaceState(null, "", window.location.pathname);
   }, []);
 
   return (
