@@ -81,4 +81,34 @@ class PembayaranController extends Controller
 
         return;
     }
+
+    public function handleMidtransCallback(Request $request)
+    {
+        $data = json_decode($request->getContent());
+        $order_id = $data->order_id;
+        $transaction_status = $data->transaction_status;
+        $fraud_status = $data->fraud_status;
+
+        $pembayaran = Pembayaran::where('invoice', $order_id)->firstOrFail();
+
+        if ($transaction_status == 'capture') {
+            if ($fraud_status == 'challenge') {
+                $pembayaran->status = 1;
+            } else if ($fraud_status == 'accept') {
+                $pembayaran->status = 2;
+            }
+        } else if ($transaction_status == 'settlement') {
+            $pembayaran->status = 2;
+        } else if ($transaction_status == 'pending') {
+            $pembayaran->status = 1;
+        } else if ($transaction_status == 'deny') {
+            $pembayaran->status = 4;
+        } else if ($transaction_status == 'expire') {
+            $pembayaran->status = 3;
+        } else if ($transaction_status == 'cancel') {
+            $pembayaran->status = 4;
+        }
+
+        $pembayaran->save();
+    }
 }

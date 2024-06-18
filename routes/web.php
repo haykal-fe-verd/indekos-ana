@@ -13,6 +13,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+Route::post('/midtrans/callback', [PembayaranController::class, 'handleMidtransCallback']);
+
 Route::middleware('guest')->group(function () {
     // home
     Route::get('/', [HomeController::class, 'index'])->name('home');
