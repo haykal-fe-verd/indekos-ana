@@ -1,5 +1,5 @@
 import React from "react";
-import { Head } from "@inertiajs/react";
+import { Head, router } from "@inertiajs/react";
 import moment from "moment/moment";
 import ReactToPrint from "react-to-print";
 
@@ -84,6 +84,28 @@ function PageTransaksiSaya({ transaksi }: any) {
       onBeforeGetContentResolve.current?.(null);
     }
   }, [onBeforeGetContentResolve.current, showData]);
+
+  React.useEffect(() => {
+    // Parse query parameters dari URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const order_id = urlParams.get("order_id");
+    const status_code = urlParams.get("status_code");
+    const transaction_status = urlParams.get("transaction_status");
+
+    // Jika parameter ada, lakukan fetch ke route
+    if (order_id && status_code && transaction_status) {
+      router.get(route("midtrans.callback"), {
+        order_id,
+        status_code,
+        transaction_status,
+      }),
+        {
+          onSuccess: () => {
+            router.visit(route("transaksi.index"));
+          },
+        };
+    }
+  }, []);
 
   return (
     <AuthLayout>
