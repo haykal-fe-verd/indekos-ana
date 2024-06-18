@@ -98,12 +98,7 @@ function PageTransaksiSaya({ transaksi }: any) {
         order_id,
         status_code,
         transaction_status,
-      }),
-        {
-          onSuccess: () => {
-            router.visit(route("transaksi.index"));
-          },
-        };
+      });
     }
   }, []);
 
