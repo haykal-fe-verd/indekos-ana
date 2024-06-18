@@ -15,8 +15,6 @@ import currentcyFormatter from "@/lib/currentcy-formatter";
 import PrintComponent from "./print-component";
 
 function PageTransaksiSaya({ transaksi }: any) {
-  console.log("🚀  testttt ==>", "testttt");
-
   //! events
   const onBayar = (item: any) => {
     handlPayment(item.snap_token);
