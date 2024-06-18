@@ -103,6 +103,6 @@ class PembayaranController extends Controller
             $pembayaran->save();
         }
 
-        return redirect()->route('transaksi.index', with('success', 'Invoice Berhasil diupdate'));
+        return;
     }
 }

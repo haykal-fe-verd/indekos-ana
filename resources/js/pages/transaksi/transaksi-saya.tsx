@@ -94,7 +94,7 @@ function PageTransaksiSaya({ transaksi }: any) {
 
     // Jika parameter ada, lakukan fetch ke route
     if (order_id && status_code && transaction_status) {
-      router.get(route("midtrans.callback"), {
+      router.post(route("midtrans.callback"), {
         order_id,
         status_code,
         transaction_status,
