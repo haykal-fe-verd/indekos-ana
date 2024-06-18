@@ -3,6 +3,7 @@ import { router } from "@inertiajs/react";
 function handlPayment(snapToken: string) {
   window.snap.pay(snapToken, {
     onSuccess: function (result: any) {
+      console.log("🚀  success ==>", result);
       router.post(
         "/update-via",
         {
@@ -23,6 +24,7 @@ function handlPayment(snapToken: string) {
     },
 
     onPending: function (result: any) {
+      console.log("🚀  pending ==>", result);
       router.post(
         "/update-via",
         {
@@ -43,6 +45,7 @@ function handlPayment(snapToken: string) {
     },
 
     onError: function (result: any) {
+      console.log("🚀  error ==>", result);
       console.log("error", result);
     },
   });

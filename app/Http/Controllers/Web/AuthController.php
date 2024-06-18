@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Password;
 use App\Http\Requests\Auth\LoginRequest;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
@@ -61,7 +62,6 @@ class AuthController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'tanggal_lahir' => 'required|date',
-            'umur' => 'required|integer',
             'jenis_kelamin' => 'required|string|max:20',
             'no_hp' => 'required|string|max:20',
             'alamat' => 'required|string|max:255',
@@ -73,7 +73,7 @@ class AuthController extends Controller
             'nama' => $request->nama,
             'email' => $request->email,
             'tanggal_lahir' => $request->tanggal_lahir,
-            'umur' => $request->umur,
+            'umur' => Carbon::parse($request->tanggal_lahir)->age,
             'jenis_kelamin' => $request->jenis_kelamin,
             'no_hp' => $request->no_hp,
             'alamat' => $request->alamat,

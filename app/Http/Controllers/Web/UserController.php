@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\File;
@@ -41,15 +42,16 @@ class UserController extends Controller
             'nama' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:tb_user,email'],
             'tanggal_lahir' => ['required', 'date'],
-            'umur' => ['required', 'integer'],
             'no_hp' => ['required', 'string', 'max:20'],
             'alamat' => ['required', 'string', 'max:255'],
             'jenis_kelamin' => ['required', Rule::in(['pria', 'wanita'])],
             'role' => ['required', Rule::in(['admin', 'penyewa'])],
             'password' => ['required', 'string', 'min:8'],
         ]);
+        $tanggalLahir = Carbon::parse($request->tanggal_lahir);
+        $umur = $tanggalLahir->age;
 
-        $request->merge(['email_verified_at' => now()]);
+        $request->merge(['email_verified_at' => now(), 'umur' => $umur]);
         User::create($request->all());
 
         return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan');
@@ -61,12 +63,15 @@ class UserController extends Controller
             'nama' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique('tb_user', 'email')->ignore($user->id)],
             'tanggal_lahir' => ['required', 'date'],
-            'umur' => ['required', 'integer'],
             'no_hp' => ['required', 'string', 'max:20'],
             'alamat' => ['required', 'string', 'max:255'],
             'jenis_kelamin' => ['required', Rule::in(['pria', 'wanita'])],
             'role' => ['required', Rule::in(['admin', 'penyewa'])],
         ]);
+
+        $tanggalLahir = Carbon::parse($request->tanggal_lahir);
+        $umur = $tanggalLahir->age;
+        $request->merge(['email_verified_at' => now(), 'umur' => $umur]);
 
         $user->update($request->all());
 
