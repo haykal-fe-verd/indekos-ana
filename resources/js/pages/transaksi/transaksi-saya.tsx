@@ -13,6 +13,7 @@ import { DollarSign, Loader2, Printer } from "lucide-react";
 import handlPayment from "@/lib/handle-payment";
 import currentcyFormatter from "@/lib/currentcy-formatter";
 import PrintComponent from "./print-component";
+import { on } from "events";
 
 function PageTransaksiSaya({ transaksi }: any) {
   //! events
@@ -98,7 +99,12 @@ function PageTransaksiSaya({ transaksi }: any) {
         order_id,
         status_code,
         transaction_status,
-      });
+      }),
+        {
+          onSuccess: () => {
+            window.history.replaceState(null, "", window.location.pathname);
+          },
+        };
     }
   }, []);
 
