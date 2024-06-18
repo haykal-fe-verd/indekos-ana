@@ -102,7 +102,7 @@ function PageTransaksiSaya({ transaksi }: any) {
       });
     }
 
-    window.history.replaceState(null, "", window.location.pathname);
+    // window.history.replaceState(null, "", window.location.pathname);
   }, []);
 
   return (

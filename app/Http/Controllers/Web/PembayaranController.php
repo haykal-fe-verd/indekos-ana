@@ -103,6 +103,6 @@ class PembayaranController extends Controller
             $pembayaran->save();
         }
 
-        return;
+        return redirect()->route('transaksi.index');
     }
 }
