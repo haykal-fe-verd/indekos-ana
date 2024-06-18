@@ -26,16 +26,15 @@ function PageProfile({ mustVerifyEmail, status }: PageProps<{ mustVerifyEmail?: 
     email: user?.email || "",
     photo: user?.photo || "",
     tanggal_lahir: user?.tanggal_lahir || "",
-    umur: user?.umur || "",
     no_hp: user?.no_hp || "",
     alamat: user?.alamat || "",
     jenis_kelamin: user?.jenis_kelamin || "",
   });
   const { toast } = useToast();
-  console.log(data);
 
   //! states
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
 
   //! events
   const browse = () => {
@@ -48,12 +47,11 @@ function PageProfile({ mustVerifyEmail, status }: PageProps<{ mustVerifyEmail?: 
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        const imgPreview = document.getElementById("photoPreview");
-        if (imgPreview && imgPreview instanceof HTMLImageElement) {
-          imgPreview.src = reader.result as string;
-        }
+        setPreviewUrl(reader.result as string);
       };
       reader.readAsDataURL(file);
+    } else {
+      setPreviewUrl(null);
     }
   };
 
@@ -99,7 +97,11 @@ function PageProfile({ mustVerifyEmail, status }: PageProps<{ mustVerifyEmail?: 
                 onChange={onChange}
               />
               <Avatar className={cn("absolute object-cover border-2 rounded-full w-60 h-60")}>
-                <AvatarImage src={`/avatars/${auth?.user?.photo}`} />
+                {previewUrl ? (
+                  <AvatarImage id="photoPreview" src={previewUrl} />
+                ) : (
+                  <AvatarImage id="photoPreview" src={`/avatars/${auth?.user?.photo}`} />
+                )}
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               <button
@@ -196,15 +198,7 @@ function PageProfile({ mustVerifyEmail, status }: PageProps<{ mustVerifyEmail?: 
               </div>
               <div className="col-span-2 lg:col-span-1">
                 <Label htmlFor="umur">Umur</Label>
-                <Input
-                  type="number"
-                  id="umur"
-                  name="umur"
-                  min={0}
-                  value={data.umur}
-                  onChange={(e) => setData("umur", e.target.value)}
-                />
-                <InputError message={errors.umur} />
+                <Input type="number" id="umur" name="umur" min={0} value={user?.umur} disabled />
               </div>
               <div className="col-span-2">
                 <Label htmlFor="alamat">Alamat</Label>

@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProfileUpdateRequest;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\File;
@@ -24,8 +25,12 @@ class ProfileController extends Controller
 
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
-
+        $validatedData = $request->validated();
+        $tanggalLahir = Carbon::parse($validatedData['tanggal_lahir']);
+        $umur = $tanggalLahir->age;
+        $validatedData['umur'] = $umur;
+        $user = $request->user();
+        $user->fill($validatedData);
 
         if ($request->hasFile('photo')) {
             // validate photo
@@ -49,7 +54,7 @@ class ProfileController extends Controller
             $request->user()->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $user->save();
 
         return Redirect::route('profile.edit')->with('success', 'Profil berhasil diubah');
     }

@@ -19,7 +19,6 @@ class ProfileUpdateRequest extends FormRequest
             'nama' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
             'tanggal_lahir' => ['required', 'date'],
-            'umur' => ['required', 'integer'],
             'no_hp' => ['required', 'string', 'max:20'],
             'alamat' => ['required', 'string', 'max:255'],
             'jenis_kelamin' => ['required', Rule::in(['pria', 'wanita'])],
