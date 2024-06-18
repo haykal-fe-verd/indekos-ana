@@ -84,7 +84,6 @@ class PembayaranController extends Controller
 
     public function handleMidtransCallback(Request $request)
     {
-
         if ($request->has('order_id') && $request->has('status_code') && $request->has('transaction_status')) {
             $pembayaran = Pembayaran::where('invoice', $request->order_id)->firstOrFail();
 
@@ -104,6 +103,6 @@ class PembayaranController extends Controller
             $pembayaran->save();
         }
 
-        return;
+        return redirect()->route('transaksi.index', with('success', 'Invoice Berhasil diupdate'));
     }
 }
