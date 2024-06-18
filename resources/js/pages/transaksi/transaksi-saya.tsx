@@ -88,10 +88,10 @@ function PageTransaksiSaya({ transaksi }: any) {
   React.useEffect(() => {
     // Parse query parameters dari URL
     const urlParams = new URLSearchParams(window.location.search);
+    console.log("🚀  urlParams ==>", urlParams);
     const order_id = urlParams.get("order_id");
     const status_code = urlParams.get("status_code");
     const transaction_status = urlParams.get("transaction_status");
-    console.log("🚀  transaction_status ==>", transaction_status);
 
     // Jika parameter ada, lakukan fetch ke route
     if (order_id && status_code && transaction_status) {
